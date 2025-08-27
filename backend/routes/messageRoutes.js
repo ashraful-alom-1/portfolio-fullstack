@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Message = require("../models/Message");
+const { sendNotificationEmail } = require("../utils/emailService"); // ADD THIS LINE
 
 // POST: save a new message
 router.post("/", async (req, res) => {
@@ -9,6 +10,10 @@ router.post("/", async (req, res) => {
 
     const newMessage = new Message({ name, email, message });
     await newMessage.save();
+
+    // SEND EMAIL NOTIFICATION - ADD THESE 2 LINES
+    await sendNotificationEmail({ name, email, message });
+    console.log("📧 Email notification sent!");
 
     res.status(201).json({ success: true, message: "Message saved successfully" });
   } catch (error) {
