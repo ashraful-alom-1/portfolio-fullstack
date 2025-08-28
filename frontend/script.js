@@ -1,10 +1,10 @@
 /* =========================
-   script.js — Full JS File
+   script.js — Fixed for Backend Integration
    ========================= */
 /* Short note: Ensure GSAP + ScrollTrigger are loaded in HTML before this script.
    Example:
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
+   
+   
 */
 (function () {
   'use strict';
@@ -174,10 +174,13 @@
       });
     }
     /* -------------------------
-       Contact form handling (connects to backend API)
+       Contact form handling (UPDATED for Render backend)
        ------------------------- */
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
+      // Set your Render backend URL
+      const apiUrl = 'https://ashraful-alom-portfolio.onrender.com/api/messages';
+      
       contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -205,18 +208,6 @@
           // Show loading state
           submitBtn.disabled = true;
           submitBtn.textContent = 'Sending...';
-
-          // Determine API URL - more robust approach
-          let apiUrl;
-          
-          // For development (localhost or 127.0.0.1)
-          if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            apiUrl = 'http://localhost:5000/api/messages';
-          } 
-          // For production (your deployed domain)
-          else {
-            apiUrl = '/api/messages'; // Relative path for production
-          }
 
           const res = await fetch(apiUrl, {
             method: "POST",
