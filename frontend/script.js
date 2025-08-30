@@ -179,7 +179,8 @@
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
       // Set your Render backend URL
-      const apiUrl = 'https://ashraful-alom-portfolio.onrender.com/api/messages';
+      const apiUrl = 'https://portfolio-fullstack-1-rawe.onrender.com/api/messages';
+
       
       contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
