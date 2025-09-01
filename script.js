@@ -42,6 +42,67 @@
      ------------------------- */
   document.addEventListener('DOMContentLoaded', () => {
     /* -------------------------
+       MOBILE NAV TOGGLE VISIBILITY FIX
+       ------------------------- */
+    function ensureMobileNavVisible() {
+      if (window.innerWidth <= 768) {
+        const navToggle = document.getElementById('nav-toggle');
+        if (navToggle) {
+          // Force the hamburger menu to be visible on mobile
+          navToggle.style.display = 'flex';
+          navToggle.style.visibility = 'visible';
+          navToggle.style.opacity = '1';
+        }
+      }
+    }
+
+    // Run on page load
+    ensureMobileNavVisible();
+
+    // Also check on window resize
+    window.addEventListener('resize', ensureMobileNavVisible);
+
+    // Run after a short delay to ensure everything is loaded
+    setTimeout(ensureMobileNavVisible, 500);
+    setTimeout(ensureMobileNavVisible, 1000);
+    
+    /* -------------------------
+       Modern Education Section Animation
+       ------------------------- */
+    function initEducationAnimation() {
+      const eduCards = document.querySelectorAll('.edu-card');
+      
+      // Function to check if element is in viewport
+      function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) * 1.2 &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
+      
+      // Function to add visible class when in viewport
+      function checkEducationVisibility() {
+        eduCards.forEach(card => {
+          if (isInViewport(card)) {
+            card.classList.add('visible');
+          }
+        });
+      }
+      
+      // Initial check
+      checkEducationVisibility();
+      
+      // Check on scroll
+      window.addEventListener('scroll', checkEducationVisibility);
+    }
+    
+    // Initialize education animation
+    initEducationAnimation();
+    
+    /* -------------------------
        Mobile nav toggle
        ------------------------- */
     const navToggle = document.getElementById('nav-toggle');
@@ -85,6 +146,11 @@
       if (navbar) {
         if (window.scrollY > 100) navbar.classList.add('scrolled');
         else navbar.classList.remove('scrolled');
+      }
+      
+      // Ensure mobile nav stays visible
+      if (window.innerWidth <= 768) {
+        ensureMobileNavVisible();
       }
     });
     /* -------------------------
@@ -242,7 +308,7 @@
       if (!typedText) return;
       typedText.textContent = ''; // Clear any hardcoded text immediately on load
       // Changed "B.Tech CSE Student" to "Quick Learner"
-      const texts = ['Aspiring Full Stack Developer', 'Quick Learner', 'Web Developer'];
+      const texts = ['Full Stack Developer', 'Quick Learner', 'Problem Solver'];
       let tIndex = 0, cIndex = 0, deleting = false;
       let typingSpeed = 100;
       function tick() {
@@ -291,11 +357,11 @@
           scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' }
         });
       });
-      /* ---------- timeline items ---------- */
-      gsap.utils.toArray('.timeline-item').forEach((item, i) => {
-        gsap.fromTo(item, { opacity: 0, x: i % 2 === 0 ? -100 : 100 }, {
-          opacity: 1, x: 0, duration: 1, delay: i * 0.12,
-          scrollTrigger: { trigger: item, start: 'top 88%', toggleActions: 'play none none none' }
+      /* ---------- education cards ---------- */
+      gsap.utils.toArray('.edu-card').forEach((card, i) => {
+        gsap.fromTo(card, { opacity: 0, y: 50 }, {
+          opacity: 1, y: 0, duration: 0.8, delay: i * 0.1,
+          scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none none' }
         });
       });
       /* ---------- skill chips ---------- */
@@ -369,7 +435,8 @@
         
         // Slide-in text (left) and image (right)
         gsap.fromTo(aboutTextWrap, { x: -90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.72, ease: 'power3.out' });
-        gsap.fromTo(aboutImage, { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.06 });
+       gsap.fromTo(aboutImage, { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.06 });
+
         
         // insert caret for effect
         const caret = document.createElement('span');
