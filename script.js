@@ -1,12 +1,7 @@
-/* =========================
-   script.js — Updated with Hero Section Stars, Falling Stars with Trail, No Parallax
-   ========================= */
-/* Short note: Ensure GSAP + ScrollTrigger are loaded in HTML before this script. */
+
 (function () {
   'use strict';
-  /* -------------------------
-     GSAP registration (if present)
-     ------------------------- */
+ 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     try { gsap.registerPlugin(ScrollTrigger); } catch (e) { /* ignore */ }
   }
